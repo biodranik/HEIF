@@ -8,5 +8,5 @@ Compiling on macOS (to create executable `HEIF` and copying to `bin` folder):
 
 	cd HEIF
 	swiftc -o HEIF main.swift
-	cp HEIF usr/local/bin
+	cp HEIF /usr/local/bin
 
