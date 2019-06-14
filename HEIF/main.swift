@@ -1,3 +1,4 @@
+#!/usr/bin/swift
 // Copyright (c) by Alexander Borsuk, 2018
 
 import Foundation

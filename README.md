@@ -10,3 +10,6 @@ Compiling on macOS (to create executable `HEIF` and copying to `bin` folder):
 	swiftc -o HEIF main.swift
 	cp HEIF /usr/local/bin
 
+Or simply run from terminal without compilation:
+
+    ./main.swift <image>
