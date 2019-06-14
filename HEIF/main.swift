@@ -25,6 +25,7 @@ func ParseCommandLine() -> URL {
     print("Converts image to HEIC format, version", kToolVersion)
     print("Usage: " + URL(fileURLWithPath:CommandLine.arguments[0]).lastPathComponent + " [" + kCompressionQualityOption + "quality] <image>")
     print("Default quality is 0.8 and it ranges from 0.0 (max compression) to 1.0 (lossless).")
+    print("Please note: odd image dimensions will be truncated by codec to even ones.")
     exit(0)
   }
   return URL(fileURLWithPath:imagePath!)
