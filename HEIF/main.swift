@@ -8,7 +8,7 @@ let kToolVersion = 0.1
 
 // Options parsed from command line.
 let kCompressionQualityOption = "-q="
-var compressionQuality = 0.8
+var compressionQuality = 0.76
 
 // Fills options and returns input image file.
 // OR prints usage and exits if input file wasn't specified.
@@ -18,14 +18,18 @@ func ParseCommandLine() -> URL {
     let arg = CommandLine.arguments[i]
     if arg.hasPrefix(kCompressionQualityOption) {
       compressionQuality = Double(arg.suffix(arg.count - kCompressionQualityOption.count)) ?? compressionQuality
+      if compressionQuality == 0.0 {
+        print("Apple's compressor will use some internal default quality level, empirically it is 0.76-0.77")
+      }
     } else {
       imagePath = arg
     }
   }
   if imagePath == nil {
-    print("Converts image to HEIC format, version", kToolVersion)
-    print("Usage: " + URL(fileURLWithPath:CommandLine.arguments[0]).lastPathComponent + " [" + kCompressionQualityOption + "quality] <image>")
-    print("Default quality is 0.8 and it ranges from 0.0 (max compression) to 1.0 (lossless).")
+    let kBinaryName = URL(fileURLWithPath:CommandLine.arguments[0]).lastPathComponent
+    print("Converts image to HEIC format, version \(kToolVersion)")
+    print("Usage: \(kBinaryName) [\(kCompressionQualityOption)quality] <image>")
+    print("Default quality is \(compressionQuality) and it ranges from 0.1 (max compression) to 1.0 (lossless).")
     print("Please note: odd image dimensions will be truncated by codec to even ones.")
     exit(0)
   }
