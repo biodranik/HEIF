@@ -1,10 +1,11 @@
 #!/usr/bin/swift
-// Copyright (c) by Alexander Borsuk, 2018
+// Copyright (c) by Alexander Borsuk, 2021
+// See MIT license in LICENSE file.
 
 import Foundation
 import CoreImage
 
-let kToolVersion = 0.3
+let kToolVersion = 0.4
 
 // Options parsed from command line.
 let kCompressionQualityOption = "-q="
