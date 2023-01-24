@@ -14,8 +14,8 @@ var compressionQuality = defaultCompressionQuality
 
 // Fills options and returns input image file.
 // OR prints usage and exits if input file wasn't specified.
-func ParseCommandLine() -> URL {
-  var imagePath:String?
+func ParseCommandLine() -> [URL] {
+  var urls: [URL] = []
   for i in 1..<Int(CommandLine.argc) {
     let arg = CommandLine.arguments[i]
     if arg.hasPrefix(kCompressionQualityOption) {
@@ -24,10 +24,10 @@ func ParseCommandLine() -> URL {
         print("Apple's compressor will use some internal default quality level, empirically it is 0.76-0.77")
       }
     } else {
-      imagePath = arg
+      urls.append(URL(fileURLWithPath:arg))
     }
   }
-  if imagePath == nil {
+  if urls.count == 0 {
     let kBinaryName = URL(fileURLWithPath:CommandLine.arguments[0]).lastPathComponent
     print("Converts image to HEIC format, version \(kToolVersion)")
     print("Usage: \(kBinaryName) [\(kCompressionQualityOption)quality] <image>")
@@ -35,17 +35,20 @@ func ParseCommandLine() -> URL {
     print("Please note: odd image dimensions will be truncated by codec to even ones.")
     exit(0)
   }
-  return URL(fileURLWithPath:imagePath!)
+  return urls
 }
 
-let imageUrl = ParseCommandLine()
-let image = CIImage(contentsOf: imageUrl)
-let context = CIContext(options: nil)
-let heicUrl = imageUrl.deletingPathExtension().appendingPathExtension("heic")
-let options = NSDictionary(dictionary: [kCGImageDestinationLossyCompressionQuality:compressionQuality])
+let imageUrls = ParseCommandLine()
 
-try! context.writeHEIFRepresentation(of:image!,
-                        to:heicUrl,
-                        format: CIFormat.ARGB8,
-                        colorSpace: image!.colorSpace!,
-                        options:options as! [CIImageRepresentationOption : Any])
+for imageUrl in imageUrls {
+  let image = CIImage(contentsOf: imageUrl)
+  let context = CIContext(options: nil)
+  let heicUrl = imageUrl.deletingPathExtension().appendingPathExtension("heic")
+  let options = NSDictionary(dictionary: [kCGImageDestinationLossyCompressionQuality:compressionQuality])
+
+  try! context.writeHEIFRepresentation(of:image!,
+                          to:heicUrl,
+                          format: CIFormat.ARGB8,
+                          colorSpace: image!.colorSpace!,
+                          options:options as! [CIImageRepresentationOption : Any])
+}
