@@ -5,7 +5,7 @@
 import Foundation
 import CoreImage
 
-let kToolVersion = "0.4"
+let kToolVersion = "0.5"
 
 // Options parsed from command line.
 let kCompressionQualityOption = "-q="
