@@ -12,7 +12,7 @@ Compiling on macOS (to create executable `HEIF` and copying to `bin` folder):
 
 Or simply run from terminal without compilation:
 
-    ./main.swift <image>
+    ./main.swift <image1> [optional image2] [optional image3] [...]
 
 Please note: odd image dimensions will be truncated by Apple's codec to even ones. 
 
