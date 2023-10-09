@@ -46,9 +46,10 @@ for imageUrl in imageUrls {
   let heicUrl = imageUrl.deletingPathExtension().appendingPathExtension("heic")
   let options = NSDictionary(dictionary: [kCGImageDestinationLossyCompressionQuality:compressionQuality])
 
+  let colorSpace = image!.colorSpace!.model == .rgb ? image!.colorSpace! : CGColorSpaceCreateDeviceRGB()
   try! context.writeHEIFRepresentation(of:image!,
                           to:heicUrl,
                           format: CIFormat.ARGB8,
-                          colorSpace: image!.colorSpace!,
+                          colorSpace: colorSpace,
                           options:options as! [CIImageRepresentationOption : Any])
 }
